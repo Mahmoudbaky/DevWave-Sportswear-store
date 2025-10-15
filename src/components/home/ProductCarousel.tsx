@@ -8,7 +8,7 @@ import {
 import AutoPlay from "embla-carousel-autoplay";
 
 interface Product {
-  id: number;
+  _id: number;
   name: string;
   description: string;
   price: number;
@@ -33,8 +33,8 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
     >
       <CarouselContent>
         {data.map((product: Product) => (
-          <CarouselItem key={product.id}>
-            <a href={`/product/${product.id}`}>
+          <CarouselItem key={product._id}>
+            <a href={`/product/${product._id}`}>
               <div className="relative mx-auto">
                 <img
                   src={product.banner!}
@@ -44,11 +44,11 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
                   sizes="100vw"
                   className="max-h-[450px] w-full h-auto rounded-lg"
                 />
-                {/* <div className="absolute inset-0 flex items-end  justify-center">
-              <h2 className="bg-gray-900 bg-opacity-50 text-2xl font-bold px-2 text-white">
-                {product.name}
-              </h2>
-            </div> */}
+                <div className="absolute inset-0 flex items-end  justify-center">
+                  <h2 className="bg-gray-900 bg-opacity-50 text-2xl font-bold px-2 text-white">
+                    {product.name}
+                  </h2>
+                </div>
               </div>
             </a>
           </CarouselItem>

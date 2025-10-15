@@ -13,9 +13,6 @@ const FeaturedProducts = () => {
     queryFn: () => productsService.getNewProducts(),
   });
 
-  console.log("API Response:", response);
-  console.log("Products data:", response?.data);
-
   return <ProductCarousel data={response?.data ?? []} />;
 };
 

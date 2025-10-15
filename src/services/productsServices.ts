@@ -13,8 +13,9 @@ const productsService = {
   getProducts: async () => {
     return await api.get("/api/products");
   },
-  getProduct: async (id: string) => {
-    return await api.get(`/api/products/${id}`);
+  getProduct: async (id: string): Promise<ApiResponse<Product>> => {
+    const response = await api.get<ApiResponse<Product>>(`/api/products/${id}`);
+    return response.data;
   },
   createProduct: async (data: any) => {
     return await api.post("/api/products", data);
