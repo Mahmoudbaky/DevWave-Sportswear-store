@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FeaturedCategories from "@/components/home/FeaturedCategories";
+import FeaturedProducts from "@/components/home/FeaturedProducts";
 
 const Home = () => {
   return (
@@ -10,31 +11,12 @@ const Home = () => {
           <Header />
           <main className="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-7xl mx-auto">
-              <div className="relative rounded-xl overflow-hidden mb-16">
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{
-                    backgroundImage:
-                      "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZb9tZoMwNHUZf2xZ3NLqu_dLFdYC7Tcm_a6G7RJNN2j-03voHyjCAt7I9hOaNjKtk_hayfxslveGkAw_cozJSpvzWWROSXmoeF7pzvoLLScZKevjQLqMDfKWSa2vStfHnwP9cJxWDu8JxJ_TPc2zsrZjjIsbCiPNC532jaSAseu6gQwBR9WKr8QO6uDFuNtKpwUYS0irPSzzAKul8-e8ZPR5N5sXqj4dXZY5ugwk-879QgTU6N3_kmQv4NgZ_nZUwN94Q7dOFcak')",
-                  }}
-                ></div>
-                <div className="absolute inset-0 bg-black/40"></div>
-                <div className="relative min-h-[480px] flex flex-col items-start justify-end p-8 sm:p-12 text-white">
-                  <div className="max-w-lg">
-                    <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-                      New Arrivals
-                    </h1>
-                    <p className="mt-4 text-lg">
-                      Explore the latest sportswear and gear for your active
-                      lifestyle.
-                    </p>
-                    <button className="mt-8 flex items-center justify-center rounded-lg h-12 px-6 bg-primary text-white text-base font-bold shadow-lg hover:bg-primary/90 transition-colors">
-                      <span>Shop Now</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
+              {/* Slider */}
+              <FeaturedProducts />
+              {/* Featured Categories */}
               <FeaturedCategories />
+
+              {/* Popular Products */}
               <section className="mb-16">
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white mb-8">
                   Popular Products
@@ -106,32 +88,6 @@ const Home = () => {
                   </div>
                 </div>
               </section>
-              {/* <div className="relative rounded-xl overflow-hidden">
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{
-                  backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0hdqEPRGf4qAzrbPI2Rm2n9n6yQwcltO7dii3798etPuSAW5bgdHAR70TSU65uBUEFy7qeuc6_WY9qYod2ko1bQ4OCggPnPcd_lzi2kYxmqPSxgX179b6y2oWZP_VsO3duV2ilruBvHFTn7Vm-Di92_kplzfLgjNdGhdtuIUKjpnEK9uxWiGPyvbnjXiaBxJMes0YadQ95CcD7HLFB_HR79Awk-pBoJ-5QKunShbSc2kscqRgQ-aZJXf8dEVKmBgsmQBXQWS5wfE')",
-                }}
-              ></div>
-              <div className="absolute inset-0 bg-black/40"></div>
-              <div
-                className="relative min-h-[480px] flex flex-col items-start justify-end p-8 sm:p-12 text-white"
-              >
-                <div className="max-w-lg">
-                  <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-                    Summer Sale
-                  </h1>
-                  <p className="mt-4 text-lg">
-                    Up to 50% off on select items. Limited time offer.
-                  </p>
-                  <button
-                    className="mt-8 flex items-center justify-center rounded-lg h-12 px-6 bg-primary text-white text-base font-bold shadow-lg hover:bg-primary/90 transition-colors"
-                  >
-                    <span>Shop Sale</span>
-                  </button>
-                </div>
-              </div>
-            </div> */}
             </div>
           </main>
           <Footer />
