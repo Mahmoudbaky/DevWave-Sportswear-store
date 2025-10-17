@@ -5,18 +5,46 @@ export interface ApiResponse<T> {
 }
 
 export interface Product {
-  _id: number;
+  _id: string;
   name: string;
-  description: string;
+  brand: string;
+  description?: string;
+  aboutItem: string[];
   price: number;
-  image: string;
-  banner: string;
+  category: string;
+  stock: number;
+  deliveryDate: string;
+  discount: number;
+  saleRate: number;
+  images: string[];
+  banner?: string;
+  isActive: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface category {
-  id: number;
+  _id: number;
   name: string;
   image: string;
   desscription: string;
   createdAt: string;
+}
+
+export interface ProductsFilterParams {
+  category?: string;
+  brand?: string;
+  searchTerm?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  page?: number;
+  limit?: number;
+}
+
+export interface ProductsFilterApiResponse {
+  success: boolean;
+  data: Product[];
+  total: number;
+  page: number;
+  pages: number;
 }

@@ -14,6 +14,7 @@ const categoriesService = {
     const response = await api.get<ApiResponse<category[]>>(
       "/api/categories/all-categories"
     );
+
     return response.data;
   },
 };
