@@ -1,8 +1,42 @@
 import { Button } from "../ui/button";
-import { ShoppingCart, Search } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { ModeToggle } from "../ModeToggle";
 
+import { Input } from "../ui/input";
+import { useDispatch } from "react-redux";
+import { getFilteredProducts } from "@/redux/slices/productsSlice";
+import type { AppDispatch } from "@/redux/store";
+import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import type { ProductsFilterParams } from "@/types";
+import { useNavigate } from "react-router";
+
 const Header = () => {
+  // REDUX HOOKS
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const { watch, setValue } = useForm<ProductsFilterParams>({
+    defaultValues: {
+      searchTerm: "",
+    },
+  });
+
+  const [searchTerm] = watch(["searchTerm"]);
+
+  console.log(searchTerm);
+
+  useEffect(() => {
+    const filterParams: ProductsFilterParams = {};
+
+    if (searchTerm) filterParams.searchTerm = searchTerm;
+
+    // Only dispatch if there's at least one filter applied
+    if (Object.keys(filterParams).length > 0) {
+      dispatch(getFilteredProducts(filterParams));
+    }
+  }, [searchTerm, dispatch]);
+
   return (
     <header className="sticky top-0 z-10 border-b border-neutral-200/50 bg-background-light/80 px-4 backdrop-blur-sm dark:border-neutral-700/50 dark:bg-background-dark/80 sm:px-6 lg:px-8">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
@@ -40,18 +74,20 @@ const Header = () => {
                   <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
                 </svg>
               </span>
-              <input
+              <Input
                 className="form-input w-full rounded-lg border-neutral-300 bg-background-light py-2 pl-10 pr-4 text-sm placeholder-neutral-400 focus:border-primary focus:ring-primary dark:border-neutral-700 dark:bg-background-dark dark:placeholder-neutral-500 dark:focus:border-primary dark:focus:ring-primary"
+                value={watch("searchTerm") || ""}
+                onChange={(e) => setValue("searchTerm", e.target.value)}
                 placeholder="Search"
                 type="search"
               />
             </label>
           </div>
           <ModeToggle />
-          <Button className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-            <Search className="size-5" />
-          </Button>
-          <Button className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+          <Button
+            onClick={() => navigate("/cart")}
+            className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          >
             <ShoppingCart strokeWidth={2} className="size-5" />
           </Button>
           <button

@@ -46,34 +46,34 @@ const Filters = () => {
     defaultValues: {
       category: "",
       brand: "",
-      searchTerm: "",
+
       minPrice: undefined,
       maxPrice: undefined,
     },
   });
 
-  // Watch all form values
-  const watchedValues = watch();
+  // Watch specific primitive fields to avoid effect re-running due to object identity changes
+  const [category, brand, minPrice, maxPrice] = watch([
+    "category",
+    "brand",
+    "minPrice",
+    "maxPrice",
+  ]);
 
   useEffect(() => {
     const filterParams: ProductsFilterParams = {};
 
-    if (watchedValues.category) filterParams.category = watchedValues.category;
-    if (watchedValues.brand) filterParams.brand = watchedValues.brand;
-    if (watchedValues.searchTerm)
-      filterParams.searchTerm = watchedValues.searchTerm;
-    if (watchedValues.minPrice)
-      filterParams.minPrice = Number(watchedValues.minPrice);
-    if (watchedValues.maxPrice)
-      filterParams.maxPrice = Number(watchedValues.maxPrice);
+    if (category) filterParams.category = category;
+    if (brand) filterParams.brand = brand;
 
-    console.log(filterParams);
+    if (minPrice !== undefined) filterParams.minPrice = Number(minPrice);
+    if (maxPrice !== undefined) filterParams.maxPrice = Number(maxPrice);
 
     // Only dispatch if there's at least one filter applied
     if (Object.keys(filterParams).length > 0) {
       dispatch(getFilteredProducts(filterParams));
     }
-  }, [watchedValues, dispatch]);
+  }, [category, brand, minPrice, maxPrice, dispatch]);
 
   return (
     <aside className="space-y-8 lg:col-span-1">
@@ -86,7 +86,7 @@ const Filters = () => {
           Category
         </h3>
         <Select
-          value={watchedValues.category || ""}
+          value={category || ""}
           onValueChange={(value) => setValue("category", value)}
         >
           <SelectTrigger className="w-full">
@@ -121,7 +121,7 @@ const Filters = () => {
           Brand
         </h3>
         <Select
-          value={watchedValues.brand || ""}
+          value={brand || ""}
           onValueChange={(value) => setValue("brand", value)}
         >
           <SelectTrigger className="w-full">
@@ -156,7 +156,7 @@ const Filters = () => {
           Min Price
         </h3>
         <Select
-          value={watchedValues.minPrice?.toString() || ""}
+          value={minPrice?.toString() || ""}
           onValueChange={(value) => setValue("minPrice", Number(value))}
         >
           <SelectTrigger className="w-full">
@@ -177,7 +177,7 @@ const Filters = () => {
           Max Price
         </h3>
         <Select
-          value={watchedValues.maxPrice?.toString() || ""}
+          value={maxPrice?.toString() || ""}
           onValueChange={(value) => setValue("maxPrice", Number(value))}
         >
           <SelectTrigger className="w-full">

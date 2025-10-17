@@ -11,7 +11,10 @@ export interface Product {
   description?: string;
   aboutItem: string[];
   price: number;
-  category: string;
+  category: {
+    _id: string;
+    name: string;
+  };
   stock: number;
   deliveryDate: string;
   discount: number;
@@ -47,4 +50,29 @@ export interface ProductsFilterApiResponse {
   total: number;
   page: number;
   pages: number;
+}
+
+// Cart types
+export interface CartItemProduct {
+  _id: string;
+  name: string;
+  price: number;
+  images?: string[];
+}
+
+export interface CartItem {
+  product: CartItemProduct;
+  quantity: number;
+  price: number;
+  _id: string;
+}
+
+export interface Cart {
+  _id: string;
+  user: string;
+  items: CartItem[];
+  totalAmount: number;
+  createdAt: string;
+  updatedAt: string;
+  __v?: number;
 }

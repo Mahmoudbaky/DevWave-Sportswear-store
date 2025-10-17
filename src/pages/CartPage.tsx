@@ -1,6 +1,6 @@
 const CartPage = () => {
   return (
-    <body className="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
+    <div className="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
       <div className="flex flex-col min-h-screen">
         <header className="sticky top-0 z-20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -227,7 +227,7 @@ const CartPage = () => {
           </div>
         </main>
       </div>
-    </body>
+    </div>
   );
 };
 

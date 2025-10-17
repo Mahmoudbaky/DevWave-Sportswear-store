@@ -1,14 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Search, Heart, ShoppingCart } from "lucide-react";
 import { ModeToggle } from "@/components/ModeToggle";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
+import { useNavigate } from "react-router";
 
 const Header = () => {
   // useSelector: Read data from Redux store
   // This component will re-render when these values change
-  const { loading, error, otpSent, pendingEmail, otpExpiresAt, user } =
-    useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  const navigate = useNavigate();
 
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-gray-200 dark:border-gray-800 px-10 py-4">
@@ -67,10 +69,16 @@ const Header = () => {
       </nav>
       <div className="flex items-center gap-3">
         <ModeToggle />
-        <Button className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <Button
+          onClick={() => navigate("/products")}
+          className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        >
           <Search className="size-5" />
         </Button>
-        <Button className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <Button
+          onClick={() => navigate("/cart")}
+          className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        >
           <ShoppingCart strokeWidth={2} className="size-5" />
         </Button>
         <div
