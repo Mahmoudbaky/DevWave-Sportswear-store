@@ -1,47 +1,32 @@
 import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
 import { ModeToggle } from "../ModeToggle";
-
 import { Input } from "../ui/input";
 import { useDispatch } from "react-redux";
-import { getFilteredProducts } from "@/redux/slices/productsSlice";
+import { updateSearchTerm } from "@/redux/slices/productsSlice";
 import type { AppDispatch } from "@/redux/store";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import type { ProductsFilterParams } from "@/types";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
 
 const Header = () => {
   // REDUX HOOKS
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { watch, setValue } = useForm<ProductsFilterParams>({
-    defaultValues: {
-      searchTerm: "",
-    },
-  });
+  const { filterParamsValues } = useSelector(
+    (state: RootState) => state.products
+  );
 
-  const [searchTerm] = watch(["searchTerm"]);
-
-  console.log(searchTerm);
-
-  useEffect(() => {
-    const filterParams: ProductsFilterParams = {};
-
-    if (searchTerm) filterParams.searchTerm = searchTerm;
-
-    // Only dispatch if there's at least one filter applied
-    if (Object.keys(filterParams).length > 0) {
-      dispatch(getFilteredProducts(filterParams));
-    }
-  }, [searchTerm, dispatch]);
+  const handleSearchChange = (value: string) => {
+    dispatch(updateSearchTerm(value));
+  };
 
   return (
     <header className="sticky top-0 z-10 border-b border-neutral-200/50 bg-background-light/80 px-4 backdrop-blur-sm dark:border-neutral-700/50 dark:bg-background-dark/80 sm:px-6 lg:px-8">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
         <div className="flex items-center gap-6">
-          <a className="flex items-center gap-2" href="#">
+          <a className="flex items-center gap-2" href="/">
             <svg
               className="h-6 w-6 text-primary"
               fill="none"
@@ -76,8 +61,8 @@ const Header = () => {
               </span>
               <Input
                 className="form-input w-full rounded-lg border-neutral-300 bg-background-light py-2 pl-10 pr-4 text-sm placeholder-neutral-400 focus:border-primary focus:ring-primary dark:border-neutral-700 dark:bg-background-dark dark:placeholder-neutral-500 dark:focus:border-primary dark:focus:ring-primary"
-                value={watch("searchTerm") || ""}
-                onChange={(e) => setValue("searchTerm", e.target.value)}
+                value={filterParamsValues.searchTerm || ""}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Search"
                 type="search"
               />

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, Heart, ShoppingCart } from "lucide-react";
+import { Search, ShoppingCart } from "lucide-react";
 import { ModeToggle } from "@/components/ModeToggle";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";

@@ -1,5 +1,3 @@
-import React from "react";
-
 const AdminLayout = () => {
   return (
     <div className="bg-background-light dark:bg-background-dark font-display  dark:text-background-light">

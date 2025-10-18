@@ -66,6 +66,8 @@ const productsService = {
         queryString.append("limit", params.limit.toString());
       }
 
+      console.log(queryString.toString());
+
       const response = await api.get(
         `/api/products/filter?${queryString.toString()}`
       );

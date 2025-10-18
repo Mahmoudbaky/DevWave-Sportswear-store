@@ -1,12 +1,23 @@
 import Header from "@/components/products/Header";
 import Filters from "@/components/products/Filters";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/redux/store";
+import { useSelector, useDispatch } from "react-redux";
+
 import ProductsCard from "@/components/products/ProductsCard";
+import { useEffect } from "react";
+import type { AppDispatch, RootState } from "@/redux/store";
+import { getFilteredProducts } from "@/redux/slices/productsSlice";
+
 const ProductFilterPage = () => {
-  const { filteredProducts } = useSelector(
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { filteredProducts, filterParamsValues } = useSelector(
     (state: RootState) => state.products
   );
+
+  // Trigger getFilteredProducts whenever filterParamsValues changes
+  useEffect(() => {
+    dispatch(getFilteredProducts(filterParamsValues));
+  }, [filterParamsValues, dispatch]);
 
   return (
     <div className="font-display bg-background-light text-neutral-800 dark:bg-background-dark dark:text-white">

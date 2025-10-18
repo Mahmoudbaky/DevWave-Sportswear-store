@@ -4,13 +4,14 @@ import type { Product, ProductsFilterParams } from "@/types";
 
 interface ProductsState {
   filteredProducts: Product[];
+  filterParamsValues: ProductsFilterParams;
   loading: boolean;
   error: string | null;
 }
 
 export const getFilteredProducts = createAsyncThunk(
   "products/filter",
-  async (filterValues: ProductsFilterParams, { dispatch, rejectWithValue }) => {
+  async (filterValues: ProductsFilterParams, { rejectWithValue }) => {
     try {
       const response = await productsService.getFilteredProducts(filterValues);
 
@@ -26,6 +27,15 @@ export const getFilteredProducts = createAsyncThunk(
 // filteredProducts
 const filteredProductsInitialState: ProductsState = {
   filteredProducts: [],
+  filterParamsValues: {
+    brand: "",
+    category: "",
+    searchTerm: "",
+    minPrice: undefined,
+    maxPrice: undefined,
+    page: 1,
+    limit: 10,
+  },
   loading: false,
   error: null,
 };
@@ -36,6 +46,38 @@ const filteredProductsSlice = createSlice({
   reducers: {
     clearError: (state: ProductsState) => {
       state.error = null;
+    },
+    updateSearchTerm: (state: ProductsState, action: { payload: string }) => {
+      state.filterParamsValues.searchTerm = action.payload;
+    },
+    updateCategory: (state: ProductsState, action: { payload: string }) => {
+      state.filterParamsValues.category = action.payload;
+    },
+    updateBrand: (state: ProductsState, action: { payload: string }) => {
+      state.filterParamsValues.brand = action.payload;
+    },
+    updateMinPrice: (
+      state: ProductsState,
+      action: { payload: number | undefined }
+    ) => {
+      state.filterParamsValues.minPrice = action.payload;
+    },
+    updateMaxPrice: (
+      state: ProductsState,
+      action: { payload: number | undefined }
+    ) => {
+      state.filterParamsValues.maxPrice = action.payload;
+    },
+    clearFilters: (state: ProductsState) => {
+      state.filterParamsValues = {
+        brand: "",
+        category: "",
+        searchTerm: "",
+        minPrice: undefined,
+        maxPrice: undefined,
+        page: 1,
+        limit: 10,
+      };
     },
   },
   extraReducers: (builder) => {
@@ -56,5 +98,13 @@ const filteredProductsSlice = createSlice({
   },
 });
 
-export const { clearError } = filteredProductsSlice.actions;
+export const {
+  clearError,
+  updateSearchTerm,
+  updateCategory,
+  updateBrand,
+  updateMinPrice,
+  updateMaxPrice,
+  clearFilters,
+} = filteredProductsSlice.actions;
 export default filteredProductsSlice.reducer;

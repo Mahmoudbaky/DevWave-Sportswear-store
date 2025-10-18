@@ -9,18 +9,26 @@ import {
 } from "@/components/ui/select";
 
 import { useDispatch } from "react-redux";
-import { getFilteredProducts } from "@/redux/slices/productsSlice";
 import type { AppDispatch } from "@/redux/store";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import type { ProductsFilterParams } from "@/types";
 import categoriesService from "@/services/categoriesServices";
 import productsService from "@/services/productsServices";
 import { useQuery } from "@tanstack/react-query";
+import {
+  updateCategory,
+  updateBrand,
+  updateMinPrice,
+  updateMaxPrice,
+} from "@/redux/slices/productsSlice";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
 
 const Filters = () => {
   // REDUX HOOKS
   const dispatch = useDispatch<AppDispatch>();
+
+  const { filterParamsValues } = useSelector(
+    (state: RootState) => state.products
+  );
 
   // QUERIES
   const {
@@ -41,39 +49,27 @@ const Filters = () => {
     queryFn: () => productsService.getAllBrands(),
   });
 
-  // FORM SETUP
-  const { watch, setValue } = useForm<ProductsFilterParams>({
-    defaultValues: {
-      category: "",
-      brand: "",
+  // Extract values from centralized state
+  const { category, brand, minPrice, maxPrice } = filterParamsValues;
 
-      minPrice: undefined,
-      maxPrice: undefined,
-    },
-  });
+  // Handler functions for filter changes
+  const handleCategoryChange = (value: string) => {
+    dispatch(updateCategory(value));
+  };
 
-  // Watch specific primitive fields to avoid effect re-running due to object identity changes
-  const [category, brand, minPrice, maxPrice] = watch([
-    "category",
-    "brand",
-    "minPrice",
-    "maxPrice",
-  ]);
+  const handleBrandChange = (value: string) => {
+    dispatch(updateBrand(value));
+  };
 
-  useEffect(() => {
-    const filterParams: ProductsFilterParams = {};
+  const handleMinPriceChange = (value: string) => {
+    const price = value ? Number(value) : undefined;
+    dispatch(updateMinPrice(price));
+  };
 
-    if (category) filterParams.category = category;
-    if (brand) filterParams.brand = brand;
-
-    if (minPrice !== undefined) filterParams.minPrice = Number(minPrice);
-    if (maxPrice !== undefined) filterParams.maxPrice = Number(maxPrice);
-
-    // Only dispatch if there's at least one filter applied
-    if (Object.keys(filterParams).length > 0) {
-      dispatch(getFilteredProducts(filterParams));
-    }
-  }, [category, brand, minPrice, maxPrice, dispatch]);
+  const handleMaxPriceChange = (value: string) => {
+    const price = value ? Number(value) : undefined;
+    dispatch(updateMaxPrice(price));
+  };
 
   return (
     <aside className="space-y-8 lg:col-span-1">
@@ -85,10 +81,7 @@ const Filters = () => {
         <h3 className="text-lg font-semibold text-neutral-800 dark:text-neutral-200">
           Category
         </h3>
-        <Select
-          value={category || ""}
-          onValueChange={(value) => setValue("category", value)}
-        >
+        <Select value={category || ""} onValueChange={handleCategoryChange}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select category" />
           </SelectTrigger>
@@ -120,10 +113,7 @@ const Filters = () => {
         <h3 className="text-lg font-semibold text-neutral-800 dark:text-neutral-200">
           Brand
         </h3>
-        <Select
-          value={brand || ""}
-          onValueChange={(value) => setValue("brand", value)}
-        >
+        <Select value={brand || ""} onValueChange={handleBrandChange}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select brand" />
           </SelectTrigger>
@@ -157,7 +147,7 @@ const Filters = () => {
         </h3>
         <Select
           value={minPrice?.toString() || ""}
-          onValueChange={(value) => setValue("minPrice", Number(value))}
+          onValueChange={handleMinPriceChange}
         >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select min price" />
@@ -178,7 +168,7 @@ const Filters = () => {
         </h3>
         <Select
           value={maxPrice?.toString() || ""}
-          onValueChange={(value) => setValue("maxPrice", Number(value))}
+          onValueChange={handleMaxPriceChange}
         >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select max price" />
