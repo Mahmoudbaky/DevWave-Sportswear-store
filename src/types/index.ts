@@ -76,3 +76,39 @@ export interface Cart {
   updatedAt: string;
   __v?: number;
 }
+
+// Order types
+export interface OrderItem {
+  product: {
+    _id: string;
+    name: string;
+    price: number;
+  };
+  quantity: number;
+  price: number;
+  _id: string;
+}
+
+export interface Order {
+  _id: string;
+  user: {
+    _id: string;
+    email: string;
+  };
+  items: OrderItem[];
+  totalAmount: number;
+  paymentMethod: string;
+  status: string;
+  shippingAddress: string;
+  createdAt: string;
+  updatedAt: string;
+  __v?: number;
+}
+
+export interface ShippingAddress {
+  fullName: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  phoneNumber: string;
+}
