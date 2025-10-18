@@ -18,6 +18,20 @@ const initialState: CartState = {
   error: null,
 };
 
+export const fetchCart = createAsyncThunk(
+  "cart/fetchCart",
+  async ({ token }: { token: string }, { rejectWithValue }) => {
+    try {
+      const res = await cartService.getCart(token);
+      return res.data;
+    } catch (err: any) {
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch cart"
+      );
+    }
+  }
+);
+
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (
@@ -113,6 +127,12 @@ const cartSlice = createSlice({
     };
 
     builder
+      .addCase(fetchCart.pending, setPending)
+      .addCase(fetchCart.fulfilled, (state, action) => {
+        state.loading = false;
+        state.cart = action.payload;
+      })
+      .addCase(fetchCart.rejected, setRejected)
       .addCase(addToCart.pending, setPending)
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;

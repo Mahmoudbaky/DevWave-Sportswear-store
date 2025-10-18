@@ -14,6 +14,12 @@ function authHeader(token: string) {
 }
 
 const cartService = {
+  getCart: async (token: string) => {
+    const res = await api.get<ApiResponse<Cart>>("/api/cart/get-cart", {
+      headers: authHeader(token),
+    });
+    return res.data;
+  },
   addToCart: async (
     token: string,
     body: { productId: string; quantity: number }
