@@ -4,12 +4,14 @@ import { addToCart as addToCartThunk } from "@/redux/slices/cartSlice";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 const AddToCart = ({ productId }: { productId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { token } = useSelector((state: RootState) => state.auth);
   const { loading } = useSelector((state: RootState) => state.cart);
   const [localLoading, setLocalLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleAdd = async () => {
     if (!token) {
@@ -24,6 +26,7 @@ const AddToCart = ({ productId }: { productId: string }) => {
       if (addToCartThunk.fulfilled.match(action)) {
         toast.success("Item added to cart");
       } else {
+        navigate("/login");
         toast.error((action.payload as string) || "Failed to add to cart");
       }
     } finally {
