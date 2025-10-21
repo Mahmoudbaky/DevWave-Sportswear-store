@@ -16,20 +16,49 @@ const api = axios.create({
 
 const productsService = {
   getProducts: async () => {
-    return await api.get("/api/products");
+    const response = await api.get<ApiResponse<Product[]>>(
+      "/api/products/all",
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+
+    return response.data;
   },
   getProduct: async (id: string): Promise<ApiResponse<Product>> => {
     const response = await api.get<ApiResponse<Product>>(`/api/products/${id}`);
     return response.data;
   },
   createProduct: async (data: any) => {
-    return await api.post("/api/products", data);
+    console.log("Creating product with data:", data);
+
+    const response = await api.post<ApiResponse<Product>>(
+      "/api/products/create-product",
+      data,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+
+    console.log(response);
+
+    return response.data;
   },
   updateProduct: async (id: string, data: any) => {
-    return await api.put(`/api/products/${id}`, data);
+    const response = await api.put<ApiResponse<Product>>(
+      `/api/products/${id}`,
+      data,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+
+    return response.data;
   },
   deleteProduct: async (id: string) => {
-    return await api.delete(`/api/products/${id}`);
+    return await api.delete(`/api/products/${id}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
   },
 
   getFilteredProducts: async (
