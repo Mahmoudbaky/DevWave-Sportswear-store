@@ -46,7 +46,7 @@ const productsService = {
   },
   updateProduct: async (id: string, data: any) => {
     const response = await api.put<ApiResponse<Product>>(
-      `/api/products/${id}`,
+      `/api/products/update/${id}`,
       data,
       {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

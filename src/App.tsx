@@ -6,7 +6,6 @@ import ProductFilterPage from "./pages/ProductFilterPage";
 import CartPage from "./pages/CartPage";
 import OrderPage from "./pages/OrderPage";
 import AdminLayout from "./components/admin/AdminLayout";
-
 import OverviewPage from "./pages/admin/OverviewPage";
 import ProductsPage from "./pages/admin/ProductsPage";
 import ProductFormPage from "./pages/admin/ProductFormPage";
@@ -33,7 +32,10 @@ const App = () => {
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="/admin" element={<OverviewPage />} />
             <Route path="/admin/products" element={<ProductsPage />} />
-            <Route path="/admin/products-form" element={<ProductFormPage />} />
+            <Route
+              path="/admin/products-form/:id?"
+              element={<ProductFormPage />}
+            />
           </Route>
 
           {/* Public Routes */}

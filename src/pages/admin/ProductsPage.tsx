@@ -154,7 +154,12 @@ const ProductsPage = () => {
                       </span>
                     </TableCell>
                     <TableCell className="p-4">
-                      <button className="text-primary hover:underline">
+                      <button
+                        onClick={() =>
+                          navigate(`/admin/products-form/${product._id}`)
+                        }
+                        className="text-primary hover:underline"
+                      >
                         Edit
                       </button>
                     </TableCell>
