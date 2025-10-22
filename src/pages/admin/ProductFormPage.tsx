@@ -10,12 +10,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import {
-  useForm,
-  Controller,
-  type SubmitHandler,
-  type Resolver,
-} from "react-hook-form";
+import { useForm, type SubmitHandler, type Resolver } from "react-hook-form";
 import categoriesService from "@/services/categoriesServices";
 import productsService from "@/services/productsServices";
 import type { Product, category as CategoryType } from "@/types";
@@ -38,7 +33,7 @@ import {
   FormDescription,
 } from "@/components/ui/form";
 
-import { Toaster } from "sonner";
+// import { Toaster } from "sonner";
 
 type FormState = z.infer<typeof productSchema>;
 
@@ -55,8 +50,7 @@ const ProductFormPage = () => {
     defaultValues: productDefaultValues,
   });
 
-  const { register, handleSubmit, control, reset, formState, watch, setValue } =
-    form;
+  const { reset, formState, watch, setValue } = form;
 
   const currentImages = watch("images") || [];
   const currentBanner = watch("banner") || "";
