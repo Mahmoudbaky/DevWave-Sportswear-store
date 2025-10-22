@@ -9,6 +9,8 @@ import AdminLayout from "./components/admin/AdminLayout";
 import OverviewPage from "./pages/admin/OverviewPage";
 import ProductsPage from "./pages/admin/ProductsPage";
 import ProductFormPage from "./pages/admin/ProductFormPage";
+import CategoriesPage from "./pages/admin/CategoriesPage";
+import CategoryFormPage from "./pages/admin/CategoryFormPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -35,6 +37,11 @@ const App = () => {
             <Route
               path="/admin/products-form/:id?"
               element={<ProductFormPage />}
+            />
+            <Route path="/admin/categories" element={<CategoriesPage />} />
+            <Route
+              path="/admin/category-form/:id?"
+              element={<CategoryFormPage />}
             />
           </Route>
 

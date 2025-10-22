@@ -6,6 +6,7 @@ const AdminLayout = () => {
     { name: "Dashboard", icon: LayoutDashboard, href: "/admin" },
     { name: "Orders", icon: ShoppingBag, href: "#" },
     { name: "Products", icon: Barcode, href: "/admin/products" },
+    { name: "Categories", icon: Barcode, href: "/admin/categories" },
   ];
 
   return (
