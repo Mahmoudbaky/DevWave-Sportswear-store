@@ -26,10 +26,31 @@ export interface CreateOrderRequest {
 
 const orderService = {
   createOrder: async (token: string, orderData: CreateOrderRequest) => {
+    console.log("Creating order with data:", orderData);
+
     const res = await api.post<ApiResponse<Order>>(
       "/api/orders/create",
       orderData,
       { headers: authHeader(token) }
+    );
+    return res.data;
+  },
+
+  getOrders: async (token?: string) => {
+    // The server responds with data: { orders: Order[], pagination: { ... } }
+    const res = await api.get<
+      ApiResponse<{ orders: Order[]; pagination?: any }>
+    >(
+      "/api/orders/admin-get-all-orders",
+      token ? { headers: authHeader(token) } : undefined
+    );
+    return res.data;
+  },
+
+  getOrderById: async (id: string, token?: string) => {
+    const res = await api.get<ApiResponse<Order>>(
+      `/api/orders/user-order/${id}`,
+      token ? { headers: authHeader(token) } : undefined
     );
     return res.data;
   },

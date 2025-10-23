@@ -11,6 +11,8 @@ import ProductsPage from "./pages/admin/ProductsPage";
 import ProductFormPage from "./pages/admin/ProductFormPage";
 import CategoriesPage from "./pages/admin/CategoriesPage";
 import CategoryFormPage from "./pages/admin/CategoryFormPage";
+import OrdersPage from "./pages/admin/OrdersPage";
+import OrdersDetailsPage from "./pages/OrdersDetailsPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -43,14 +45,16 @@ const App = () => {
               path="/admin/category-form/:id?"
               element={<CategoryFormPage />}
             />
+            <Route path="/admin/orders" element={<OrdersPage />} />
           </Route>
 
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/products" element={<ProductFilterPage />} />
+          <Route path="/products/:category?" element={<ProductFilterPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/order" element={<OrderPage />} />
+          <Route path="/orders/:id" element={<OrdersDetailsPage />} />
         </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

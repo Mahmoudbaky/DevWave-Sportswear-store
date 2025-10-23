@@ -6,8 +6,6 @@ import type { RootState } from "@/redux/store";
 import { useNavigate } from "react-router";
 
 const Header = () => {
-  // useSelector: Read data from Redux store
-  // This component will re-render when these values change
   const { user } = useSelector((state: RootState) => state.auth);
 
   const navigate = useNavigate();

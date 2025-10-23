@@ -4,7 +4,7 @@ import { ShoppingBag, Barcode, LayoutDashboard } from "lucide-react";
 const AdminLayout = () => {
   const navigationLinks = [
     { name: "Dashboard", icon: LayoutDashboard, href: "/admin" },
-    { name: "Orders", icon: ShoppingBag, href: "#" },
+    { name: "Orders", icon: ShoppingBag, href: "/admin/orders" },
     { name: "Products", icon: Barcode, href: "/admin/products" },
     { name: "Categories", icon: Barcode, href: "/admin/categories" },
   ];

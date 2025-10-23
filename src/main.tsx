@@ -10,12 +10,12 @@ import App from "./App.tsx";
 import store from "./redux/store";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <ThemeProvider>
-        <App />
-        <Toaster />
-      </ThemeProvider>
-    </Provider>
-  </StrictMode>
+  // <StrictMode>
+  <Provider store={store}>
+    <ThemeProvider>
+      <App />
+      <Toaster />
+    </ThemeProvider>
+  </Provider>
+  // </StrictMode>
 );

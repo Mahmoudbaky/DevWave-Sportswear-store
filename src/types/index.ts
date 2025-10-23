@@ -27,7 +27,7 @@ export interface Product {
 }
 
 export interface category {
-  _id: number;
+  _id: string;
   name: string;
   image: string;
   desscription: string;
@@ -71,6 +71,9 @@ export interface Cart {
   _id: string;
   user: string;
   items: CartItem[];
+  subtotal: number;
+  shippingFee: number;
+  taxAmount: number;
   totalAmount: number;
   createdAt: string;
   updatedAt: string;
@@ -83,6 +86,7 @@ export interface OrderItem {
     _id: string;
     name: string;
     price: number;
+    images?: string[];
   };
   quantity: number;
   price: number;
@@ -99,7 +103,7 @@ export interface Order {
   totalAmount: number;
   paymentMethod: string;
   status: string;
-  shippingAddress: string;
+  shippingAddress: ShippingAddress;
   createdAt: string;
   updatedAt: string;
   __v?: number;

@@ -6,18 +6,36 @@ import ProductsCard from "@/components/products/ProductsCard";
 import { useEffect } from "react";
 import type { AppDispatch, RootState } from "@/redux/store";
 import { getFilteredProducts } from "@/redux/slices/productsSlice";
+import { useParams } from "react-router";
+import { updateCategory } from "@/redux/slices/productsSlice";
 
 const ProductFilterPage = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { category } = useParams<{ category: string }>();
 
   const { filteredProducts, filterParamsValues } = useSelector(
     (state: RootState) => state.products
   );
 
-  // Trigger getFilteredProducts whenever filterParamsValues changes
+  // When the route param `category` changes (e.g., user clicks a featured category),
+  // update the centralized filter params so Filters and the products query react to it.
+  useEffect(() => {
+    if (category) {
+      dispatch(updateCategory(category));
+    }
+    // If category is undefined or empty, we don't change the current filter (keeps previous selection).
+  }, [category, dispatch]);
+
   useEffect(() => {
     dispatch(getFilteredProducts(filterParamsValues));
   }, [filterParamsValues, dispatch]);
+
+  // console.log(filterParamsValues);
+
+  // Trigger getFilteredProducts whenever filterParamsValues changes
+  // useEffect(() => {
+  //   dispatch(getFilteredProducts({ category, ...filterParamsValues }));
+  // }, [filterParamsValues, dispatch, category]);
 
   return (
     <div className="font-display bg-background-light text-neutral-800 dark:bg-background-dark dark:text-white">

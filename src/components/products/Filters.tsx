@@ -23,6 +23,8 @@ import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 
 const Filters = () => {
+  // console.log("Filters component received categoryId:", categoryId);
+
   // REDUX HOOKS
   const dispatch = useDispatch<AppDispatch>();
 
@@ -51,6 +53,13 @@ const Filters = () => {
 
   // Extract values from centralized state
   const { category, brand, minPrice, maxPrice } = filterParamsValues;
+
+  console.log("Current filter values:", {
+    category,
+    brand,
+    minPrice,
+    maxPrice,
+  });
 
   // Handler functions for filter changes
   const handleCategoryChange = (value: string) => {

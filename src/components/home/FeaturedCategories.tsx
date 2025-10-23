@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import productsService from "@/services/productsServices";
-import ProductCarousel from "./ProductCarousel";
+
 import type { ApiResponse, category } from "@/types";
 import categoriesService from "@/services/categoriesServices";
 
@@ -23,7 +22,11 @@ const FeaturedCategories = () => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {firstThreeCategories?.map((category: category) => (
-          <a className="group" href="#">
+          <a
+            className="group"
+            href={`/products/${category._id}`}
+            key={category._id}
+          >
             <div className="w-full aspect-square rounded-xl overflow-hidden">
               <div
                 className="w-full h-full bg-center bg-cover transition-transform duration-300 group-hover:scale-105"

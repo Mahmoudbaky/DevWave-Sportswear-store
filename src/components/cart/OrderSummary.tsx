@@ -12,10 +12,10 @@ const OrderSummary = ({ cart }: Props) => {
   const navigate = useNavigate();
   const { user, token } = useSelector((state: RootState) => state.auth);
 
-  const subtotal = cart?.totalAmount ?? 0;
-  const tax = subtotal * 0.1; // 10% tax
-  const shipping = 0; // Free shipping
-  const total = subtotal + tax + shipping;
+  const subtotal = cart?.subtotal ?? 0;
+  const shipping = cart?.shippingFee ?? 0; // Free shipping
+  const tax = cart?.taxAmount ?? 0; // 10% tax
+  const total = cart?.totalAmount ?? 0;
 
   const handleProceedToCheckout = () => {
     // Check if user is logged in
@@ -51,7 +51,7 @@ const OrderSummary = ({ cart }: Props) => {
           <div className="flex justify-between text-sm text-slate-600 dark:text-slate-300">
             <span>Shipping</span>
             <span className="font-medium text-slate-800 dark:text-slate-100">
-              Free
+              {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
             </span>
           </div>
           <div className="flex justify-between text-sm text-slate-600 dark:text-slate-300">
