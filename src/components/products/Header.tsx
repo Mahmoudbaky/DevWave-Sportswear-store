@@ -8,6 +8,7 @@ import type { AppDispatch } from "@/redux/store";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
+import CartCountBadge from "../cart/CartCountBadge";
 
 const Header = () => {
   // REDUX HOOKS
@@ -69,12 +70,15 @@ const Header = () => {
             </label>
           </div>
           <ModeToggle />
-          <Button
-            onClick={() => navigate("/cart")}
-            className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-          >
-            <ShoppingCart strokeWidth={2} className="size-5" />
-          </Button>
+          <div className="relative">
+            <Button
+              onClick={() => navigate("/cart")}
+              className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            >
+              <ShoppingCart strokeWidth={2} className="size-5" />
+            </Button>
+            <CartCountBadge />
+          </div>
           <button
             className="h-9 w-9 rounded-full bg-cover bg-center"
             style={{

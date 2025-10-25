@@ -8,7 +8,7 @@ const Home = () => {
     <div className="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
       <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
         <div className="layout-container flex h-full grow flex-col">
-          <Header />
+          {/* <Header /> */}
           <main className="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-7xl mx-auto">
               {/* Slider */}
@@ -90,7 +90,7 @@ const Home = () => {
               </section>
             </div>
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </div>

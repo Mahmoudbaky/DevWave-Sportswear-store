@@ -30,19 +30,18 @@ const CartPage = () => {
               </h1>
 
               {/* cart Items */}
-              {loading && <div className="text-slate-500">Loading cart...</div>}
-              {error && <div className="text-red-500">{error}</div>}
-              {!loading && !error && (
-                <div className="space-y-6">
-                  {cart?.items?.length ? (
-                    cart.items.map((item) => (
-                      <CartItemCard key={item._id} item={item} />
-                    ))
-                  ) : (
-                    <div className="text-slate-500">Your cart is empty.</div>
-                  )}
-                </div>
-              )}
+              <div className="mb-4">
+                {error && <div className="text-red-500">{error}</div>}
+              </div>
+              <div className="space-y-6">
+                {cart?.items?.length ? (
+                  cart.items.map((item) => (
+                    <CartItemCard key={item._id} item={item} />
+                  ))
+                ) : (
+                  <div className="text-slate-500">Your cart is empty.</div>
+                )}
+              </div>
             </div>
             <div className="lg:col-span-1">
               <OrderSummary cart={cart} />

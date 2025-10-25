@@ -15,6 +15,7 @@ import OrdersPage from "./pages/admin/OrdersPage";
 import OrdersDetailsPage from "./pages/OrdersDetailsPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Layout from "./components/Layout";
 
 const App = () => {
   const queryClient = new QueryClient({
@@ -49,12 +50,14 @@ const App = () => {
           </Route>
 
           {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/order" element={<OrderPage />} />
+            <Route path="/orders/:id" element={<OrdersDetailsPage />} />
+          </Route>
           <Route path="/products/:category?" element={<ProductFilterPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/order" element={<OrderPage />} />
-          <Route path="/orders/:id" element={<OrdersDetailsPage />} />
         </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

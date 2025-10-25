@@ -4,9 +4,11 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { useNavigate } from "react-router";
+import { Badge } from "./ui/badge";
+import CartCountBadge from "./cart/CartCountBadge";
 
 const Header = () => {
-  const { user } = useSelector((state: RootState) => state.auth);
+  // const { user, token } = useSelector((state: RootState) => state.auth);
 
   const navigate = useNavigate();
 
@@ -75,12 +77,15 @@ const Header = () => {
         >
           <Search className="size-5" />
         </Button>
-        <Button
-          onClick={() => navigate("/cart")}
-          className="flex cursor-pointer text-black dark:text-white items-center justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-        >
-          <ShoppingCart strokeWidth={2} className="size-5" />
-        </Button>
+        <div className="relative">
+          <Button
+            onClick={() => navigate("/cart")}
+            className="flex cursor-pointer text-black dark:text-white items-center justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          >
+            <ShoppingCart strokeWidth={2} className="size-5" />
+          </Button>
+          <CartCountBadge />
+        </div>
         <div
           className="bg-center flex items-center justify-center bg-no-repeat aspect-square bg-cover rounded-full size-10 cursor-pointer"
           // style={{
@@ -88,7 +93,7 @@ const Header = () => {
           //     "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdqUQL6NodUkFit9MJImNdwfkodNzyAPR1vmT0fIMU-vVHC0-Jnk7JYkMu9AgahGR9g2gJpRZmxCPx1jffNagiILEUvotCH4If_6yI6cAytrqOLBY9UMf_thwKZ7qXSTqstwkAC5vebgyDue-jQqm38OCBQoOD5Z572ncAoTFrvRkbhNecJ6OFSIbu7_WLjbQVm6Zlb4jQk1B7Idq_4ai7Px5zZQXVkdr2HWbpKY5yoO-wjDrsR4KM5HlVdAJzYpEmJy_ljjUGaiI')",
           // }}
         >
-          {user?.email.split("@")[0].charAt(0).toUpperCase() || "A"}
+          {/* {user?.email.split("@")[0].charAt(0).toUpperCase() || "A"} */}
         </div>
       </div>
     </header>
