@@ -100,7 +100,6 @@ const OrderPage = () => {
     return (
       <div className="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
         <div className="flex min-h-screen w-full flex-col">
-          <Header />
           <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-4xl">
               <div className="text-center py-16">
@@ -127,8 +126,6 @@ const OrderPage = () => {
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
       <div className="flex min-h-screen w-full flex-col">
-        {/* Header */}
-        <Header />
         <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">
             <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-8">

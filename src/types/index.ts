@@ -116,3 +116,19 @@ export interface ShippingAddress {
   zipCode: string;
   phoneNumber: string;
 }
+
+export interface FeedbackUser {
+  _id: string;
+  email?: string;
+  userName?: string;
+}
+
+export interface Feedback {
+  _id: string;
+  user: FeedbackUser;
+  product: string;
+  rating: number;
+  comment?: string;
+  createdAt: string;
+  updatedAt: string;
+}
