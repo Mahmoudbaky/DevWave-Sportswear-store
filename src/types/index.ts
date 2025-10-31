@@ -100,6 +100,9 @@ export interface Order {
     email: string;
   };
   items: OrderItem[];
+  subtotal: number;
+  shippingFee: number;
+  taxAmount: number;
   totalAmount: number;
   paymentMethod: string;
   status: string;
@@ -121,6 +124,7 @@ export interface FeedbackUser {
   _id: string;
   email?: string;
   userName?: string;
+  userImage?: string;
 }
 
 export interface Feedback {

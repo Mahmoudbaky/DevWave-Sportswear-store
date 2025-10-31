@@ -113,7 +113,7 @@ const OrdersDetailsPage = () => {
                           Subtotal
                         </p>
                         <p className="font-medium">
-                          ${order.totalAmount.toFixed(2)}
+                          ${order.subtotal.toFixed(2)}
                         </p>
                       </div>
                       {/* If shipping/taxes exist on backend, show them here. For now these are placeholders if not provided */}
@@ -121,13 +121,21 @@ const OrdersDetailsPage = () => {
                         <p className="text-gray-500 dark:text-gray-400">
                           Shipping
                         </p>
-                        <p className="font-medium">$0.00</p>
+                        <p className="font-medium">
+                          {order.shippingFee
+                            ? `$${order.shippingFee.toFixed(2)}`
+                            : "Free"}
+                        </p>
                       </div>
                       <div className="flex justify-between">
                         <p className="text-gray-500 dark:text-gray-400">
                           Taxes
                         </p>
-                        <p className="font-medium">$0.00</p>
+                        <p className="font-medium">
+                          {order.taxAmount
+                            ? `$${order.taxAmount.toFixed(2)}`
+                            : "Free"}
+                        </p>
                       </div>
                       <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
                       <div className="flex justify-between text-lg font-bold">

@@ -4,16 +4,12 @@ import ProductCarousel from "./ProductCarousel";
 import type { ApiResponse, Product } from "@/types";
 
 const FeaturedProducts = () => {
-  const {
-    data: response,
-    isLoading,
-    error,
-  } = useQuery<ApiResponse<Product[]>>({
+  const { data: response } = useQuery<ApiResponse<Product[]>>({
     queryKey: ["new-products"],
     queryFn: () => productsService.getNewProducts(),
   });
 
-  return <ProductCarousel data={response?.data ?? []} />;
+  return <ProductCarousel data={(response?.data ?? []) as any} />;
 };
 
 export default FeaturedProducts;

@@ -54,6 +54,24 @@ const orderService = {
     );
     return res.data;
   },
+
+  getUserOrders: async (token: string, page?: number, limit?: number) => {
+    const config: any = {
+      headers: authHeader(token),
+    };
+
+    // Attach pagination params when provided
+    if (page !== undefined || limit !== undefined) {
+      config.params = {};
+      if (page !== undefined) config.params.page = page;
+      if (limit !== undefined) config.params.limit = limit;
+    }
+
+    const res = await api.get<
+      ApiResponse<{ orders: Order[]; pagination?: any }>
+    >("/api/orders/user-orders", config);
+    return res.data;
+  },
 };
 
 export default orderService;

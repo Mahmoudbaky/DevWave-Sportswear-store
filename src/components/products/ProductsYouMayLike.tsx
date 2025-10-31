@@ -1,5 +1,3 @@
-import React from "react";
-
 const ProductsYouMayLike = () => {
   return (
     <div className="mt-16">

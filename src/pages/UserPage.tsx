@@ -18,6 +18,7 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import type { RootState } from "@/redux/store";
+import UploadButton from "@/components/upload/UploadButton";
 
 type UpdateUserProfile = z.infer<typeof updateUserProfileValidationSchema>;
 
@@ -36,7 +37,7 @@ const UserPage = () => {
     },
   });
 
-  const { handleSubmit, reset, watch, formState } = form;
+  const { handleSubmit, reset, watch, formState, setValue } = form;
 
   useEffect(() => {
     let mounted = true;
@@ -100,13 +101,15 @@ const UserPage = () => {
         userImage: values.userImage,
       };
       const res = await userServices.updateUser(payload);
+      // updateUser may return ApiResponse<User> or the user object directly
+      const updated = res?.data || res;
       // reflect returned data if any
       reset({
-        userName: res?.userName || res?.name || values.userName,
-        email: res?.email || values.email,
-        userImage: res?.userImage || values.userImage || "",
+        userName: updated?.userName || updated?.name || values.userName,
+        email: updated?.email || values.email,
+        userImage: updated?.userImage || values.userImage || "",
       });
-      // optionally show a toast here
+      toast.success("Profile updated successfully");
     } catch (err: any) {
       console.error(err);
       setServerError(
@@ -124,11 +127,36 @@ const UserPage = () => {
         <div className="flex p-4 @container border-b border-gray-200 dark:border-gray-700 mb-8">
           <div className="flex w-full flex-col gap-4 @[520px]:flex-row @[520px]:justify-between @[520px]:items-center">
             <div className="flex gap-4 items-center">
-              <div
-                className="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-24 h-24"
-                data-alt="User avatar"
-                // style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxAwMhY8wuLokxpDkIcw0VO1UkdX2zhhvo08X_jkGZ1wLY7Kqov2d-sQiV7LaPcFuvi2_rx8BSYWFRW10t_Si028m0qlmc-hwwgx7HXWmY4QfsmLcqlevJQRLVtZQgg9C72AsPAen_ErFvKXHW_uwperwZT5FuTPwQb40XP5wx5dm8DaTFLhMAC5LUUmN9_mU2hqSH5mezTKThVpPf7qn8SejbiQVcX_n5-mnI-RsQer6GBLj3LdlOF6WWnKsTUa_KMuZBGRye-og");'
-              ></div>
+              <div className="flex flex-col items-center gap-2">
+                <div
+                  className="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-24 h-24"
+                  data-alt="User avatar"
+                  style={{
+                    backgroundImage: watch("userImage")
+                      ? `url(${watch("userImage")})`
+                      : undefined,
+                  }}
+                />
+
+                <div className="w-24">
+                  <UploadButton
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(files: any[]) => {
+                      const url = files?.[0]?.fileUrl || files?.[0]?.url || "";
+                      if (url) {
+                        setValue("userImage", url, { shouldDirty: true });
+                        toast.success("Avatar uploaded");
+                      } else {
+                        toast.error("Upload failed to return a file URL");
+                      }
+                    }}
+                    onUploadError={(error: any) => {
+                      console.error("Upload error", error);
+                      toast.error("Upload failed");
+                    }}
+                  />
+                </div>
+              </div>
               <div className="flex flex-col justify-center">
                 <p className="text-2xl font-bold leading-tight tracking-[-0.015em] text-gray-900 dark:text-white">
                   {watch("userName") || "Your name"}

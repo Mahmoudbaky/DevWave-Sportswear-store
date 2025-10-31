@@ -2,10 +2,33 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import reviewServices from "@/services/reviewServices";
 import type { Feedback } from "@/types";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type Props = {
   productId?: string;
 };
+
+// Small inline Star component: uses SVG so we get a real scalable star (filled or outline).
+const Star = ({
+  filled,
+  className = "w-4 h-4",
+}: {
+  filled: boolean;
+  className?: string;
+}) => (
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    className={className + " inline-block"}
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    fill={filled ? "currentColor" : "none"}
+    stroke="currentColor"
+    strokeWidth={filled ? 0 : 1.5}
+  >
+    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+  </svg>
+);
 
 const CustomerReviews = ({ productId }: Props) => {
   const {
@@ -18,6 +41,8 @@ const CustomerReviews = ({ productId }: Props) => {
     queryFn: () => reviewServices.getProductFeedback(productId!),
     enabled: !!productId,
   });
+
+  console.log("Feedback response:", feedbackResponse);
 
   const feedbacks: Feedback[] = feedbackResponse?.data ?? [];
 
@@ -36,11 +61,15 @@ const CustomerReviews = ({ productId }: Props) => {
 
       <div className="flex items-center mt-2 gap-2">
         <div className="flex text-primary">
-          <span className="material-symbols-outlined">star</span>
-          <span className="material-symbols-outlined">star</span>
-          <span className="material-symbols-outlined">star</span>
-          <span className="material-symbols-outlined">star</span>
-          <span className="material-symbols-outlined">star_half</span>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star
+              key={i}
+              filled={
+                Boolean(average) ? i < Math.round(Number(average)) : false
+              }
+              className="w-5 h-5"
+            />
+          ))}
         </div>
         <p className="text-gray-600 dark:text-gray-400">
           {average ? `${average} out of 5` : "No reviews yet"}
@@ -73,24 +102,21 @@ const CustomerReviews = ({ productId }: Props) => {
             className="border-b border-gray-200 dark:border-gray-800 pb-6"
           >
             <div className="flex items-center gap-3">
-              <div
-                className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 w-10 h-10 flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-sm font-semibold text-gray-800 dark:text-white"
-                aria-hidden
-              >
-                {fb.user?.userName
-                  ? fb.user.userName.charAt(0).toUpperCase()
-                  : (fb.user?.email || "?").charAt(0).toUpperCase()}
-              </div>
-
+              <Avatar className="w-10 h-10">
+                <AvatarImage src={fb.user?.userImage} />
+                <AvatarFallback>{fb.user.userName?.slice(0, 2)}</AvatarFallback>
+              </Avatar>
               <div>
                 <p className="font-semibold text-gray-900 dark:text-white">
-                  {fb.user?.userName || fb.user?.email || "Anonymous"}
+                  {fb.user?.userName || "Anonymous"}
                 </p>
                 <div className="flex text-primary text-sm">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className="material-symbols-outlined text-sm">
-                      {i < fb.rating ? "star" : "star_outline"}
-                    </span>
+                    <Star
+                      key={i}
+                      filled={!!fb.rating && i < (fb.rating ?? 0)}
+                      className="w-4 h-4 mr-0.5"
+                    />
                   ))}
                 </div>
               </div>

@@ -4,11 +4,7 @@ import type { ApiResponse, category } from "@/types";
 import categoriesService from "@/services/categoriesServices";
 
 const FeaturedCategories = () => {
-  const {
-    data: response,
-    isLoading,
-    error,
-  } = useQuery<ApiResponse<category[]>>({
+  const { data: response } = useQuery<ApiResponse<category[]>>({
     queryKey: ["featured-categories"],
     queryFn: () => categoriesService.getCategories(),
   });

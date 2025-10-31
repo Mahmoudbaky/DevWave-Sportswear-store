@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-// NavLink is provided by react-router-dom in the app; import may require project types to be installed
+import React from "react";
 import { NavLink } from "react-router";
 import {
   ShoppingBag,
@@ -9,7 +8,6 @@ import {
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
-import { Badge } from "../ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Keep navigation links at module scope to ensure stable references
@@ -23,31 +21,25 @@ const navigationLinks = [
 const Sidebar = React.memo(function Sidebar() {
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const avatarStyle = useMemo(
-    () => ({
-      backgroundImage:
-        'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBo9u_7ZxBSWGacj9em0_2mAqmGH7fooL4K2MByi8bFbxyDwvSYNa3cPGtdtINYZnoHNhCsXbW-Ke30-8C1LXsefOIge8BLUR5qH1Z8buN3t1mjSaffqrmZpMBX63t67Iu4iXiPFAMXswNDkaR4KHBHONw7ZDuT5ZWQ0DVlxtm9o9lzD738tLxrOUwpANcxPAvNmG9zwShlgDLiLPpsmNB51fVRgpaUSU7OT7WlslOZV44bIUdUtDvy1gA_rWyv8uIXPVA5ho8R7Jk")',
-    }),
-    []
-  );
-
   return (
     <aside className="w-64 bg-background-light dark:bg-background-dark border-r border-primary/20 dark:border-primary/10 flex flex-col">
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-primary/20 dark:border-primary/10">
-        <div className="bg-primary p-2 rounded-lg">
-          <svg
-            className="size-6 text-white"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.44L19.56 8.19L12 11.94L4.44 8.19L12 4.44ZM4 9.87L11 13.5V19.07L4 15.42V9.87ZM13 19.07V13.5L20 9.87V15.42L13 19.07Z" />
-          </svg>
+      <a href="/">
+        <div className="flex items-center gap-3 px-6 py-5 border-b border-primary/20 dark:border-primary/10">
+          <div className="bg-primary p-2 rounded-lg">
+            <svg
+              className="size-6 text-white"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M12 2L2 7V17L12 22L22 17V7L12 2ZM12 4.44L19.56 8.19L12 11.94L4.44 8.19L12 4.44ZM4 9.87L11 13.5V19.07L4 15.42V9.87ZM13 19.07V13.5L20 9.87V15.42L13 19.07Z" />
+            </svg>
+          </div>
+          <h1 className="text-xl font-bold dark:text-background-light">
+            SportZone
+          </h1>
         </div>
-        <h1 className="text-xl font-bold dark:text-background-light">
-          SportZone
-        </h1>
-      </div>
+      </a>
 
       <nav className="flex-1 px-4 py-6">
         <ul className="space-y-2">
@@ -81,11 +73,11 @@ const Sidebar = React.memo(function Sidebar() {
           </Avatar>
           <div>
             <p className="font-semibold dark:text-background-light">
-              {user?.email.split("@")[0]} <Badge>Admin</Badge>
+              {user?.userName}
             </p>
             <a
               className="text-sm text-primary/80 dark:text-primary/70 hover:text-primary"
-              href="#"
+              href="/user"
             >
               View Profile
             </a>

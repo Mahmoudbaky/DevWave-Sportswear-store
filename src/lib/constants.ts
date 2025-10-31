@@ -1,4 +1,5 @@
-export const baseUrl = import.meta.env.SERVER_URL || "http://localhost:3000";
+export const baseUrl =
+  import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
 export const PRODUCTS_PER_PAGE = 10;
 

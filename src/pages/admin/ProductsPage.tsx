@@ -1,12 +1,11 @@
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DotsLoader } from "react-loadly";
+
 import { Loader } from "lucide-react";
 
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -19,7 +18,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 
 const ProductsPage = () => {
-  const [search, setSearch] = useState("");
+  const [search] = useState("");
   const navigate = useNavigate();
 
   const { data: products, isLoading } = useQuery<ApiResponse<Product[]>, Error>(

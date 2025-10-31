@@ -15,6 +15,7 @@ import OrdersPage from "./pages/admin/OrdersPage";
 import OrdersDetailsPage from "./pages/OrdersDetailsPage";
 import UserPage from "./pages/UserPage";
 import SignUpPage from "./pages/SignUpPage";
+import UserOrdersPage from "./pages/UserOrdersPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Layout from "./components/Layout";
@@ -58,6 +59,8 @@ const App = () => {
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/order" element={<OrderPage />} />
+            {/* <Route path="/order/success" element={<OrderPage success />} /> */}
+            <Route path="/user-orders" element={<UserOrdersPage />} />
             <Route path="/orders/:id" element={<OrdersDetailsPage />} />
             <Route path="/user" element={<UserPage />} />
           </Route>

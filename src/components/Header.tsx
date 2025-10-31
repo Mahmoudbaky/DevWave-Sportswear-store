@@ -1,16 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Search, ShoppingCart } from "lucide-react";
 import { ModeToggle } from "@/components/ModeToggle";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/redux/store";
+
 import { useNavigate } from "react-router";
-import { Badge } from "./ui/badge";
+import UserButton from "./UserButton";
 import CartCountBadge from "./cart/CartCountBadge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Header = () => {
-  const { user, token } = useSelector((state: RootState) => state.auth);
-
   const navigate = useNavigate();
 
   return (
@@ -49,10 +45,7 @@ const Header = () => {
           </Button>
           <CartCountBadge />
         </div>
-        <Avatar className="w-10 h-10">
-          <AvatarImage src={user?.userImage} />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <UserButton />
       </div>
     </header>
   );

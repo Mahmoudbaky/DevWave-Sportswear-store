@@ -1,14 +1,10 @@
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogOverlay,
-  DialogPortal,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import {
@@ -36,7 +32,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import reviewServices from "@/services/reviewServices";
 import { toast } from "sonner";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { reviewSchema } from "@/validators/reviewValidators";
 
 type ReviewFormValues = z.infer<typeof reviewSchema>;

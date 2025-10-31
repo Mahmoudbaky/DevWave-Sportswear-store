@@ -286,7 +286,7 @@ const ProductFormPage = () => {
             <FormField
               control={form.control}
               name="images"
-              render={({ field }) => (
+              render={({}) => (
                 <FormItem>
                   <FormLabel className="text-base">Product Images</FormLabel>
                   <FormDescription>
@@ -430,7 +430,7 @@ const ProductFormPage = () => {
             <FormField
               control={form.control}
               name="banner"
-              render={({ field }) => (
+              render={({}) => (
                 <FormItem>
                   <FormLabel className="text-base">Banner Image</FormLabel>
                   <FormDescription>
