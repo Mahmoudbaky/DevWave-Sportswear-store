@@ -14,11 +14,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+import { toast } from "sonner";
+import type { RootState } from "@/redux/store";
 
 type UpdateUserProfile = z.infer<typeof updateUserProfileValidationSchema>;
 
 const UserPage = () => {
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const token = useSelector((s: RootState) => s.auth.token);
+  // const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
 
   const form = useForm<UpdateUserProfile>({
@@ -30,12 +36,18 @@ const UserPage = () => {
     },
   });
 
-  const { register, handleSubmit, reset, watch, formState } = form;
+  const { handleSubmit, reset, watch, formState } = form;
 
   useEffect(() => {
     let mounted = true;
     (async () => {
-      setLoading(true);
+      // Redirect to login immediately if there's no token
+      if (!token) {
+        toast.info("Please log in to view your profile.");
+        navigate("/login");
+        return;
+      }
+      // setLoading(true);
       try {
         const data = await userServices.getUser();
         console.log("Fetched user data:", data);
@@ -48,19 +60,38 @@ const UserPage = () => {
         });
       } catch (err: any) {
         console.error(err);
-        setServerError(err?.message || "Failed to load profile");
+        const message =
+          err?.response?.data?.message || err?.message || String(err || "");
+        setServerError(message || "Failed to load profile");
+
+        // If the error indicates an auth/session problem, navigate to login
+        const normalized = String(message).toLowerCase();
+        const authErrors = [
+          "invalid token",
+          "token expired",
+          "expired token",
+          "unauthorized",
+          "not authenticated",
+          "authentication failed",
+        ];
+
+        if (authErrors.some((e) => normalized.includes(e))) {
+          toast.info("Session expired. Please log in again.");
+          navigate("/login");
+        }
       } finally {
-        if (mounted) setLoading(false);
+        // if (mounted) setLoading(false);
       }
     })();
     return () => {
       mounted = false;
     };
-  }, [reset]);
+    // token and navigate included so we redirect immediately when token becomes falsy
+  }, [reset, token, navigate]);
 
   const onSubmit = async (values: UpdateUserProfile) => {
     setServerError(null);
-    setLoading(true);
+    // setLoading(true);
     try {
       // Send only allowed fields to the API
       const payload = {
@@ -82,12 +113,12 @@ const UserPage = () => {
         err?.response?.data?.message || err?.message || "Update failed"
       );
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   return (
-    <main className="flex-1 p-8 bg-background-light dark:bg-background-dark">
+    <div className="flex-1 p-8 bg-background-light dark:bg-background-dark">
       <div className="max-w-4xl mx-auto">
         {/** Header */}
         <div className="flex p-4 @container border-b border-gray-200 dark:border-gray-700 mb-8">
@@ -105,13 +136,6 @@ const UserPage = () => {
                 <p className="text-base font-normal leading-normal text-gray-500 dark:text-gray-400">
                   {watch("email") || "your@email.com"}
                 </p>
-                {/* <p className="text-base font-normal leading-normal text-gray-500 dark:text-gray-400">
-                  {watch("joinedAt")
-                    ? `Joined on ${new Date(
-                        watch("joinedAt") as string
-                      ).toLocaleDateString()}`
-                    : ""}
-                </p> */}
               </div>
             </div>
           </div>
@@ -149,16 +173,6 @@ const UserPage = () => {
                   </FormItem>
                 )}
               />
-              {/* <label className="flex flex-col">
-                <p className="text-base font-medium leading-normal pb-2 text-gray-900 dark:text-white">
-                  Phone Number
-                </p>
-                <input
-                  {...register("phone")}
-                  className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-gray-600 bg-background-light dark:bg-background-dark h-14 placeholder:text-gray-400 p-[15px] text-base font-normal leading-normal"
-                  disabled={formState.isSubmitting}
-                />
-              </label> */}
             </div>
             {serverError ? (
               <p className="text-sm text-red-600">{serverError}</p>
@@ -184,7 +198,7 @@ const UserPage = () => {
           </form>
         </Form>
       </div>
-    </main>
+    </div>
   );
 };
 

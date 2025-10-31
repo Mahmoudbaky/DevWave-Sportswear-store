@@ -1,21 +1,52 @@
-import Header from "@/components/Header";
 import CartItemCard from "@/components/cart/CartItemCard";
 import OrderSummary from "@/components/cart/OrderSummary";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/redux/store";
 import { fetchCart } from "@/redux/slices/cartSlice";
-
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 const CartPage = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch<AppDispatch>();
   const token = useSelector((s: RootState) => s.auth.token);
-  const { cart, loading, error } = useSelector((s: RootState) => s.cart);
+  const { cart, error } = useSelector((s: RootState) => s.cart);
+  console.log("Cart data:", error);
 
   useEffect(() => {
-    if (token) {
-      dispatch(fetchCart({ token }));
+    // If there's no token at all, ask user to log in and redirect.
+    if (!token) {
+      toast.info("Please log in to view your cart.");
+      navigate("/login");
+      return;
     }
-  }, [dispatch, token]);
+
+    // Normalize error to check common auth-related messages
+    if (error) {
+      const normalized = String(error).toLowerCase();
+      const authErrors = [
+        "invalid token",
+        "token expired",
+        "expired token",
+        "unauthorized",
+        "not authenticated",
+        "authentication failed",
+      ];
+
+      const isAuthError = authErrors.some((e) => normalized.includes(e));
+
+      if (isAuthError) {
+        // Session probably expired or token invalid — force login
+        toast.info("Session expired. Please log in again.");
+        navigate("/login");
+        return;
+      }
+    }
+
+    // If we have a token and no auth-related error, fetch the cart
+    dispatch(fetchCart({ token }));
+  }, [dispatch, token, error, navigate]);
 
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">

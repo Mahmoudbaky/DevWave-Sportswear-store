@@ -18,6 +18,8 @@ const cartService = {
     const res = await api.get<ApiResponse<Cart>>("/api/cart/get-cart", {
       headers: authHeader(token),
     });
+
+    // console.log("Fetched cart:", res);
     return res.data;
   },
   addToCart: async (

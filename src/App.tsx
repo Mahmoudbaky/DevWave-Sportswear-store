@@ -14,6 +14,7 @@ import CategoryFormPage from "./pages/admin/CategoryFormPage";
 import OrdersPage from "./pages/admin/OrdersPage";
 import OrdersDetailsPage from "./pages/OrdersDetailsPage";
 import UserPage from "./pages/UserPage";
+import SignUpPage from "./pages/SignUpPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Layout from "./components/Layout";
@@ -33,6 +34,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<SignUpPage />} />
 
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminLayout />}>
