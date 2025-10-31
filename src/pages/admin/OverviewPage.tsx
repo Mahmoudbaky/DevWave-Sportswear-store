@@ -1,4 +1,4 @@
-import React from "react";
+import { DollarSign, ReceiptText, Users, ScanBarcode } from "lucide-react";
 
 const OverviewPage = () => {
   return (
@@ -26,7 +26,9 @@ const OverviewPage = () => {
               </p>
             </div>
             <div className="bg-primary/10 dark:bg-primary/20 text-primary p-3 rounded-lg">
-              <span className="material-symbols-outlined">paid</span>
+              <span className="material-symbols-outlined">
+                <DollarSign />
+              </span>
             </div>
           </div>
           <div className="bg-white dark:bg-[#18272e]/60 rounded-xl p-6 flex items-start justify-between border border-primary/10 dark:border-primary/20">
@@ -42,7 +44,9 @@ const OverviewPage = () => {
               </p>
             </div>
             <div className="bg-primary/10 dark:bg-primary/20 text-primary p-3 rounded-lg">
-              <span className="material-symbols-outlined">receipt_long</span>
+              <span className="material-symbols-outlined">
+                <ReceiptText />
+              </span>
             </div>
           </div>
           <div className="bg-white dark:bg-[#18272e]/60 rounded-xl p-6 flex items-start justify-between border border-primary/10 dark:border-primary/20">
@@ -58,7 +62,9 @@ const OverviewPage = () => {
               </p>
             </div>
             <div className="bg-primary/10 dark:bg-primary/20 text-primary p-3 rounded-lg">
-              <span className="material-symbols-outlined">groups</span>
+              <span className="material-symbols-outlined">
+                <Users />
+              </span>
             </div>
           </div>
           <div className="bg-white dark:bg-[#18272e]/60 rounded-xl p-6 flex items-start justify-between border border-primary/10 dark:border-primary/20">
@@ -74,7 +80,9 @@ const OverviewPage = () => {
               </p>
             </div>
             <div className="bg-primary/10 dark:bg-primary/20 text-primary p-3 rounded-lg">
-              <span className="material-symbols-outlined">label</span>
+              <span className="material-symbols-outlined">
+                <ScanBarcode />
+              </span>
             </div>
           </div>
         </div>

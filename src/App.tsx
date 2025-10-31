@@ -13,6 +13,7 @@ import CategoriesPage from "./pages/admin/CategoriesPage";
 import CategoryFormPage from "./pages/admin/CategoryFormPage";
 import OrdersPage from "./pages/admin/OrdersPage";
 import OrdersDetailsPage from "./pages/OrdersDetailsPage";
+import UserPage from "./pages/UserPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Layout from "./components/Layout";
@@ -56,6 +57,7 @@ const App = () => {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/order" element={<OrderPage />} />
             <Route path="/orders/:id" element={<OrdersDetailsPage />} />
+            <Route path="/user" element={<UserPage />} />
           </Route>
           <Route path="/products/:category?" element={<ProductFilterPage />} />
         </Routes>

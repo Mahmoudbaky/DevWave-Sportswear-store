@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import Header from "@/components/Header";
 import PaymentForm from "@/components/order/PaymentForm";
 import AddressForm from "@/components/order/AddressForm";
 import { createOrder } from "@/redux/slices/orderSlice";

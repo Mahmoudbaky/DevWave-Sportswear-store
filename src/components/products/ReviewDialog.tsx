@@ -36,12 +36,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import reviewServices from "@/services/reviewServices";
 import { toast } from "sonner";
-
-const reviewSchema = z.object({
-  productId: z.string().min(1, "Product id is required"),
-  rating: z.number().min(1, "Rating is required").max(5),
-  comment: z.string().min(1, "Comment is required").max(1000),
-});
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { reviewSchema } from "@/validators/reviewValidators";
 
 type ReviewFormValues = z.infer<typeof reviewSchema>;
 
@@ -57,6 +53,7 @@ type Props = {
 
 const ReviewDialog = ({ productId, onSubmitted, renderTrigger }: Props) => {
   const [open, setOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   const form = useForm<ReviewFormValues>({
     resolver: zodResolver(reviewSchema),
@@ -94,6 +91,7 @@ const ReviewDialog = ({ productId, onSubmitted, renderTrigger }: Props) => {
         setOpen(false);
         form.reset({ productId: productId || "", rating: 5, comment: "" });
         // notify parent to refresh reviews if provided
+        queryClient.invalidateQueries({ queryKey: ["productFeedback"] });
         onSubmitted?.();
       } else {
         const msg = (res && (res as any).message) || "Failed to submit review";

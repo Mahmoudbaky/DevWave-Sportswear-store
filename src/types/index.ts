@@ -132,3 +132,11 @@ export interface Feedback {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface User {
+  _id: string;
+  email: string;
+  role: string;
+  userName: string;
+  userImage?: string;
+}

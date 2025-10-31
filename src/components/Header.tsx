@@ -6,9 +6,10 @@ import type { RootState } from "@/redux/store";
 import { useNavigate } from "react-router";
 import { Badge } from "./ui/badge";
 import CartCountBadge from "./cart/CartCountBadge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Header = () => {
-  // const { user, token } = useSelector((state: RootState) => state.auth);
+  const { user, token } = useSelector((state: RootState) => state.auth);
 
   const navigate = useNavigate();
 
@@ -31,44 +32,6 @@ const Header = () => {
           <h2 className="text-2xl font-bold">SportZone</h2>
         </div>
       </a>
-      <nav className="hidden lg:flex items-center gap-8">
-        <a
-          className="text-base font-medium hover:text-primary transition-colors"
-          href="#"
-        >
-          New Arrivals
-        </a>
-        <a
-          className="text-base font-medium hover:text-primary transition-colors"
-          href="#"
-        >
-          Men
-        </a>
-        <a
-          className="text-base font-medium hover:text-primary transition-colors"
-          href="#"
-        >
-          Women
-        </a>
-        <a
-          className="text-base font-medium hover:text-primary transition-colors"
-          href="#"
-        >
-          Kids
-        </a>
-        <a
-          className="text-base font-medium hover:text-primary transition-colors"
-          href="#"
-        >
-          Accessories
-        </a>
-        <a
-          className="text-base font-medium hover:text-primary transition-colors"
-          href="#"
-        >
-          Sale
-        </a>
-      </nav>
       <div className="flex items-center gap-3">
         <ModeToggle />
         <Button
@@ -86,15 +49,10 @@ const Header = () => {
           </Button>
           <CartCountBadge />
         </div>
-        <div
-          className="bg-center flex items-center justify-center bg-no-repeat aspect-square bg-cover rounded-full size-10 cursor-pointer"
-          // style={{
-          //   backgroundImage:
-          //     "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdqUQL6NodUkFit9MJImNdwfkodNzyAPR1vmT0fIMU-vVHC0-Jnk7JYkMu9AgahGR9g2gJpRZmxCPx1jffNagiILEUvotCH4If_6yI6cAytrqOLBY9UMf_thwKZ7qXSTqstwkAC5vebgyDue-jQqm38OCBQoOD5Z572ncAoTFrvRkbhNecJ6OFSIbu7_WLjbQVm6Zlb4jQk1B7Idq_4ai7Px5zZQXVkdr2HWbpKY5yoO-wjDrsR4KM5HlVdAJzYpEmJy_ljjUGaiI')",
-          // }}
-        >
-          {/* {user?.email.split("@")[0].charAt(0).toUpperCase() || "A"} */}
-        </div>
+        <Avatar className="w-10 h-10">
+          <AvatarImage src={user?.userImage} />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
       </div>
     </header>
   );
