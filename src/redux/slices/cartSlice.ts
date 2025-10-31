@@ -3,7 +3,7 @@ import {
   createAsyncThunk,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-import cartService from "@/services/cartServices";
+import cartService from "@/services/cartServices.ts";
 import type { Cart } from "@/types";
 
 interface CartState {
