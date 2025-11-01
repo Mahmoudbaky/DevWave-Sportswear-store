@@ -73,6 +73,7 @@ const authSlice = createSlice({
       state.pendingEmail = null;
       state.otpExpiresAt = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
     },
     // Clear errors manually if needed
     clearError: (state: AuthState) => {

@@ -1,10 +1,13 @@
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
 import ImageDisplay from "@/components/products/ImageDisplay";
 import productsService from "@/services/productsServices";
 import CustomerReviews from "@/components/products/CustomerReviews";
 import ProductsYouMayLike from "@/components/products/ProductsYouMayLike";
 import ReviewDialog from "@/components/products/ReviewDialog";
+import { addToCart } from "@/redux/slices/cartSlice";
+import { toast } from "sonner";
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,6 +24,11 @@ const ProductPage = () => {
   });
 
   const product = productResponse?.data;
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const token = useSelector((state: any) => state.auth?.token);
+  const cartLoading = useSelector((state: any) => state.cart?.loading);
 
   if (isLoading) {
     return (
@@ -108,8 +116,41 @@ const ProductPage = () => {
                     </p>
                   </div>
                   <div className="flex flex-col">
-                    <button className="mt-8 w-full flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-12 px-6 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em]">
-                      <span className="truncate">Add to Cart</span>
+                    <button
+                      onClick={async () => {
+                        // If user not authenticated, redirect to login
+                        if (!token) {
+                          toast.error(
+                            "Please login to add items to your cart."
+                          );
+                          navigate("/login");
+                          return;
+                        }
+
+                        try {
+                          // default quantity = 1
+                          await (dispatch as any)(
+                            addToCart({
+                              token,
+                              productId: product._id,
+                              quantity: 1,
+                            })
+                          ).unwrap?.();
+                        } catch (err) {
+                          // swallow errors here; services or a toast can show this elsewhere
+                          // console.error("Add to cart failed", err);
+                        }
+                      }}
+                      disabled={cartLoading}
+                      className={`mt-8 w-full flex min-w-[84px] max-w-[480px] items-center justify-center overflow-hidden rounded-xl h-12 px-6 text-base font-bold leading-normal tracking-[0.015em] ${
+                        cartLoading
+                          ? "bg-gray-400 text-white cursor-wait"
+                          : "bg-primary text-white cursor-pointer"
+                      }`}
+                    >
+                      <span className="truncate">
+                        {cartLoading ? "Adding..." : "Add to Cart"}
+                      </span>
                     </button>
                     <div className="mt-4">
                       <ReviewDialog

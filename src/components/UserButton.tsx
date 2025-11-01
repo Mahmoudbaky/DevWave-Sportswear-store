@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
+import SignOutForm from "./SignOutForm";
 
 const UserButton = () => {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -59,9 +60,9 @@ const UserButton = () => {
             </DropdownMenuItem>
           )}
 
-          {/* <DropdownMenuItem className="p-0 mb-1">
+          <DropdownMenuItem className="p-0 mb-1">
             <SignOutForm />
-          </DropdownMenuItem> */}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

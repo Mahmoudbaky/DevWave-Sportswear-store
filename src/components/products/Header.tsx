@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import CartCountBadge from "../cart/CartCountBadge";
+import UserButton from "../UserButton";
 
 const Header = () => {
   // REDUX HOOKS
@@ -25,24 +26,23 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-10 border-b border-neutral-200/50 bg-background-light/80 px-4 backdrop-blur-sm dark:border-neutral-700/50 dark:bg-background-dark/80 sm:px-6 lg:px-8">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
+      <div className="mx-auto flex h-16  items-center justify-between">
         <div className="flex items-center gap-6">
           <a className="flex items-center gap-2" href="/">
-            <svg
-              className="h-6 w-6 text-primary"
-              fill="none"
-              viewBox="0 0 48 48"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                clip-rule="evenodd"
-                d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"
-                fill="currentColor"
-                fill-rule="evenodd"
-              ></path>
-            </svg>
+            <div className="w-8 h-8 text-primary">
+              <svg
+                fill="none"
+                viewBox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </div>
             <span className="text-xl font-bold text-neutral-900 dark:text-white">
-              FitFlex
+              SportZone
             </span>
           </a>
         </div>
@@ -73,19 +73,13 @@ const Header = () => {
           <div className="relative">
             <Button
               onClick={() => navigate("/cart")}
-              className="flex cursor-pointer items-center  justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              className="flex cursor-pointer items-center text-black dark:text-white   justify-center rounded-full h-10 w-10 bg-background-light dark:bg-background-dark hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
               <ShoppingCart strokeWidth={2} className="size-5" />
             </Button>
             <CartCountBadge />
           </div>
-          <button
-            className="h-9 w-9 rounded-full bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKJihdG_4TkEEmSCGEbdexB5uCnJgG939RQJ_x4s8_tK2N8NzkkRrqADnnKrn0FB0_wupyfn0T_7kJKBUvzmm7K_bkGj3Mn2g-GHaJVWKe5DpVC9w1S0ElYplyhCVsKtcpVO9rHsfzHPxGH6pUXHLqBeqqAau54IgF5BeOEcRwa3-QcseJwMNlrPGZUtJgBbsSi4HUO-U4cPadDQpWlVbQGJkDZLnnkn5co4nBDPeQC9s9f5fhMrHWKAJ9DR-QzG4d1yODaRrX2p0')",
-            }}
-          ></button>
+          <UserButton />
         </div>
       </div>
     </header>

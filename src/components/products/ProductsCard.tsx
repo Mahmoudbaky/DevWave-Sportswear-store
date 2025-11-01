@@ -4,12 +4,10 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-//   import ProductPrice from "./product-price";
-//   import Link from "next/link";
-//   import Image from "next/image";
 import type { Product } from "@/types";
 import AddToCart from "./AddToCart";
-//   import { getMyCart } from "@/lib/actions/cart.action";
+import ProductPrice from "./ProductPrice";
+
 const ProductsCard = ({ product }: { product: Product }) => {
   return (
     <Card className="w-full max-w-sm overflow-hidden transition-all hover:shadow-lg">
@@ -24,7 +22,6 @@ const ProductsCard = ({ product }: { product: Product }) => {
             height={300}
             width={300}
             className="max-h-[300px] w-full object-cover bg-white"
-            // priority={true}
           />
         </a>
       </div>
@@ -36,7 +33,9 @@ const ProductsCard = ({ product }: { product: Product }) => {
               {product.category.name}
             </p>
           </div>
-          <div>{/* <ProductPrice value={Number(product.price)} /> */}</div>
+          <div>
+            <ProductPrice value={Number(product.price)} />
+          </div>
         </div>
       </CardHeader>
       <CardContent className="p-4 pt-0">

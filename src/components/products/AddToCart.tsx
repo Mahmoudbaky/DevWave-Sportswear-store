@@ -15,6 +15,7 @@ const AddToCart = ({ productId }: { productId: string }) => {
 
   const handleAdd = async () => {
     if (!token) {
+      navigate("/login");
       toast.error("Please log in to add items to your cart");
       return;
     }
