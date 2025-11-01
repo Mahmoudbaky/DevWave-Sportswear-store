@@ -2,8 +2,9 @@ import type { CartItem } from "@/types";
 import { Trash } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { updateCart } from "@/redux/slices/cartSlice";
+import { updateCart, removeFromCart } from "@/redux/slices/cartSlice";
 import type { RootState, AppDispatch } from "@/redux/store";
+import { toast } from "sonner";
 
 const CartItemCard = ({ item }: { item: CartItem }) => {
   const { token } = useSelector((state: RootState) => state.auth);
@@ -47,6 +48,18 @@ const CartItemCard = ({ item }: { item: CartItem }) => {
     );
   };
 
+  const handleRemove = () => {
+    // Dispatch removal of this product from the cart
+    if (!token) return;
+    toast.success("Item removed from cart");
+    dispatch(
+      removeFromCart({
+        token: token!,
+        productId: item.product._id,
+      })
+    );
+  };
+
   const image = item.product.images?.[0] || "/images/placeholder.png";
   return (
     <div className="flex items-center gap-4 p-4 rounded-lg bg-white dark:bg-slate-800/50 shadow-sm">
@@ -80,7 +93,12 @@ const CartItemCard = ({ item }: { item: CartItem }) => {
           +
         </button>
       </div>
-      <button className="text-slate-400 cursor-pointer dark:text-slate-500 hover:text-red-500 dark:hover:text-red-500 transition-colors">
+      <button
+        type="button"
+        onClick={handleRemove}
+        aria-label={`Remove ${item.product.name} from cart`}
+        className="text-slate-400 cursor-pointer dark:text-slate-500 hover:text-red-500 dark:hover:text-red-500 transition-colors"
+      >
         <Trash className="size-5 ml-2.5" />
       </button>
     </div>
